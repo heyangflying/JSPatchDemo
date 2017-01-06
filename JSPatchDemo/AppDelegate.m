@@ -5,9 +5,10 @@
 //  Created by admin on 17/1/3.
 //  Copyright © 2017年 早柒天. All rights reserved.
 //
-
+#import "AFNetworking.h"
+#import "JPEngine.h"
 #import "AppDelegate.h"
-
+#import "JPViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -17,6 +18,33 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [JPEngine startEngine];
+   
+    AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
+    [mgr POST:@"https://ys.api.zearly.cn/v1/site/patch" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@",responseObject);
+        NSString *str = responseObject[@"data"][@"content"];
+        [JPEngine evaluateScript:str];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        
+    }];
+    
+   
+    
+  //  NSString *sourcePath = [[NSBundle mainBundle] pathForResource:@"demo" ofType:@"js"];
+   // NSString *script = [NSString stringWithContentsOfFile:sourcePath encoding:NSUTF8StringEncoding error:nil];
+    //[JPEngine evaluateScript:script];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    JPViewController *rootViewController = [[JPViewController alloc] init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+    self.window.rootViewController = navigationController;
+    [self.window makeKeyAndVisible];
+    
+    [[UINavigationBar appearance] setBackgroundImage:nil forBarMetrics:UIBarMetricsCompact];
     return YES;
 }
 
