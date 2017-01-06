@@ -21,7 +21,7 @@
     [JPEngine startEngine];
    
     AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
-    [mgr POST:@"https://ys.api.zearly.cn/v1/site/patch" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [mgr POST:@"your url" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@",responseObject);
         NSString *str = responseObject[@"data"][@"content"];
         [JPEngine evaluateScript:str];
